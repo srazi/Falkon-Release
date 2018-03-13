@@ -39,6 +39,7 @@ environment:
 install:
   - appveyor DownloadFile "https://github.com/KDE/falkon/archive/master.zip"
   - 7z x "master.zip"
+  - cd falkon-master
   - dir
   - set QZ_DIR=%CD%
   - set CPU=32
@@ -139,8 +140,8 @@ deploy:
     artifact: /Falkon.*Installer.*\.exe/         # Falkon Installer
     draft: false
     prerelease: false
-    on:
-      appveyor_repo_tag: true                      # deploy on tag push only
+    # on:
+      # appveyor_repo_tag: true                      # deploy on tag push only
 
 # notifications:
   # - provider: Email
