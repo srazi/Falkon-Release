@@ -37,6 +37,16 @@ environment:
       QTDIR: C:\Qt\5.10.1\msvc2015
 
 install:
+  - set CPU=32
+  - IF /I "%ARCH%" == "x64" (set CPU=64)
+  - set OPENSSL_DIR="C:\OpenSSL-Win%CPU%"
+  - set ICU_DIR_NAME=icu4c-54_1-Win%CPU%-msvc10
+  - set ICU_DOWNLOAD_URL="http://download.icu-project.org/files/icu4c/54.1/%ICU_DIR_NAME%.zip"
+  - call "C:\Program Files (x86)\Microsoft Visual Studio "%VSVER%".0\VC\vcvarsall.bat" %ARCH%
+  - set PATH=%QTDIR%\bin;%TOOLSDIR%\bin;%OPENSSL_DIR%\bin;%CD%\bin;%PATH%
+  - echo "Falkon BUILD %APPVEYOR_BUILD_VERSION%_%QMAKESPEC%_%CONFIGURATION%_%ARCH%"
+
+build_script:
   - echo "Clone, compile and install ECM..."
   - git clone git://anongit.kde.org/extra-cmake-modules
   - cd extra-cmake-modules
@@ -65,16 +75,6 @@ install:
   #- cd falkon-master
   - dir
   - set FK_DIR=%CD%
-  - set CPU=32
-  - IF /I "%ARCH%" == "x64" (set CPU=64)
-  - set OPENSSL_DIR="C:\OpenSSL-Win%CPU%"
-  - set ICU_DIR_NAME=icu4c-54_1-Win%CPU%-msvc10
-  - set ICU_DOWNLOAD_URL="http://download.icu-project.org/files/icu4c/54.1/%ICU_DIR_NAME%.zip"
-  - call "C:\Program Files (x86)\Microsoft Visual Studio "%VSVER%".0\VC\vcvarsall.bat" %ARCH%
-  - set PATH=%QTDIR%\bin;%TOOLSDIR%\bin;%OPENSSL_DIR%\bin;%CD%\bin;%PATH%
-
-build_script:
-  - echo "Falkon BUILD %APPVEYOR_BUILD_VERSION%_%QMAKESPEC%_%CONFIGURATION%_%ARCH%"
   - cmake -v
   - mkdir build
   - cd build
