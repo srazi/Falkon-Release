@@ -47,9 +47,12 @@ install:
   - make install
   - echo "Downloading Falkon-master.zip..."
   - cd ../..
-  - appveyor DownloadFile "https://github.com/KDE/falkon/archive/master.zip"
-  - 7z x "master.zip"
-  - cd falkon-master
+  #- appveyor DownloadFile "https://github.com/KDE/falkon/archive/master.zip"
+  - appveyor DownloadFile "https://github.com/KDE/falkon/archive/Falkon/3.0.zip"
+  #- 7z x "master.zip"
+  - 7z x "3.0.zip"
+  - cd falkon-Falkon-3.0
+  #- cd falkon-master
   - dir
   - set FK_DIR=%CD%
   - set CPU=32
@@ -71,7 +74,7 @@ build_script:
   - call %MAKETOOL%
 
 test_script:
-  - cd %FK_DIR%\bin
+  - cd %FK_DIR%\build\bin
   - call autotests.exe
 
 after_build:
