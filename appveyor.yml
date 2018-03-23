@@ -55,23 +55,22 @@ build_script:
   - cmake  -G "NMake Makefiles JOM" .. # or run : cmake -DCMAKE_INSTALL_PREFIX=/usr .. &&
   - call %MAKETOOL%
   - call %MAKETOOL% install
-  - echo "Downloading Falkon-master.zip..."
   - cd ../..
-  - echo "Clone, compile and install KI18N..."
-  - git clone git://anongit.kde.org/ki18n.git
-  - cd ki18n
-  - mkdir build
-  - cd build
-  - cmake  -G "NMake Makefiles JOM" ..
-  - call %MAKETOOL%
-  - call %MAKETOOL% install
-  - cd ../..
+  # - echo "Clone, compile and install KI18N..."
+  # - git clone git://anongit.kde.org/ki18n.git
+  # - cd ki18n
+  # - mkdir build
+  # - cd build
+  # - cmake  -G "NMake Makefiles JOM" ..
+  # - call %MAKETOOL%
+  # - call %MAKETOOL% install
+  # - cd ../..
   - echo "Downloading source of Falkon..."
   #- appveyor DownloadFile "https://github.com/KDE/falkon/archive/master.zip"
-  - appveyor DownloadFile "https://github.com/KDE/falkon/archive/Falkon/3.0.zip"
+  - appveyor DownloadFile "https://github.com/srazi/falkon/archive/win.zip"
   #- 7z x "master.zip"
-  - 7z x "3.0.zip"
-  - cd falkon-Falkon-3.0
+  - 7z x "win.zip"
+  - cd falkon-win
   #- cd falkon-master
   - dir
   - set FK_DIR=%CD%
