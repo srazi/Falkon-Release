@@ -77,7 +77,7 @@ build_script:
   - mkdir build
   - cd build
   - echo "Genarating NMake Makefiles JOM using CMake..."
-  - cmake -G "NMake Makefiles JOM" ..
+  - cmake -DOPENSSL_ROOT_DIR=%OPENSSL_DIR% -G "NMake Makefiles JOM" ..
   - echo "Build Falkon..."
   - call %MAKETOOL%
 
