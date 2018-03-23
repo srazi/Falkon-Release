@@ -46,6 +46,7 @@ install:
   - make
   - make install
   - echo "Downloading Falkon-master.zip..."
+  - cd ../..
   - appveyor DownloadFile "https://github.com/KDE/falkon/archive/master.zip"
   - 7z x "master.zip"
   - cd falkon-master
@@ -61,8 +62,12 @@ install:
 
 build_script:
   - echo "Falkon BUILD %APPVEYOR_BUILD_VERSION%_%QMAKESPEC%_%CONFIGURATION%_%ARCH%"
-  - qmake -v
-  - qmake CONFIG+=%CONFIGURATION% INCLUDEPATH+="%OPENSSL_DIR%\include" LIBS+=-L%OPENSSL_DIR%\lib Falkon.pro
+  - cmake -v
+  - mkdir build
+  - cd build
+  - echo "Genarating NMake Makefiles JOM using CMake..."
+  - cmake -G "NMake Makefiles JOM" ..
+  - echo "Build Falkon..."
   - call %MAKETOOL%
 
 test_script:
