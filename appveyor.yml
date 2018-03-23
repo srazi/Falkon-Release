@@ -22,7 +22,7 @@ image:
 
 environment:
   global:
-    QZ_VER: 3.0.0
+    FK_VER: 3.0.0
     VSVER: 14
     ARCH: x86
     QMAKESPEC: win32-msvc
@@ -50,7 +50,7 @@ install:
   - 7z x "master.zip"
   - cd falkon-master
   - dir
-  - set QZ_DIR=%CD%
+  - set FK_DIR=%CD%
   - set CPU=32
   - IF /I "%ARCH%" == "x64" (set CPU=64)
   - set OPENSSL_DIR="C:\OpenSSL-Win%CPU%"
@@ -73,9 +73,9 @@ test_script:
 
 after_build:
   # prepare dependencies
-  - echo [Paths] > %QZ_DIR%\bin\qt.conf && echo Plugins="." >> %QZ_DIR%\bin\qt.conf
-  - copy  %QZ_DIR%\COPYRIGHT %QZ_DIR%\bin\COPYRIGHT.txt
-  - cd %QZ_DIR%\windows
+  - echo [Paths] > %FK_DIR%\bin\qt.conf && echo Plugins="." >> %FK_DIR%\bin\qt.conf
+  - copy  %FK_DIR%\COPYRIGHT %FK_DIR%\bin\COPYRIGHT.txt
+  - cd %FK_DIR%\windows
   - IF NOT EXIST "dependencies" ( mkdir dependencies )
   - cd dependencies
   - IF NOT EXIST "%ICU_DIR_NAME%.zip" ( appveyor DownloadFile %ICU_DOWNLOAD_URL% ) else ( echo "Use cached %ICU_DIR_NAME%.zip")
@@ -101,32 +101,32 @@ after_build:
   - 7z x ..\dependencies\StdUtils.2016-05-14.r2.zip
   - copy Desktop\Plugin\*.dll .\
   - copy Plugins\Unicode\*.dll .\
-  - copy Include\*.nsh %QZ_DIR%\windows
+  - copy Include\*.nsh %FK_DIR%\windows
   # prepare icu
   - 7z x "..\dependencies\%ICU_DIR_NAME%.zip"
   # prepare qtwebengine_dictionaries 
   - mkdir qtwebengine_dictionaries
   - cd qtwebengine_dictionaries
   - IF /I "%APPVEYOR_REPO_TAG%" == "true" (
-        7z x "%QZ_DIR%\windows\dependencies\master.tar.gz" &&
+        7z x "%FK_DIR%\windows\dependencies\master.tar.gz" &&
         7z x "master.tar" &&
         mkdir "doc" &&
         move README* "doc\" &&
         move COPYING* "doc\"
     )
-  - cd %QZ_DIR%\windows
+  - cd %FK_DIR%\windows
   # set paths
   - set OPENSSL_BIN_DIR="%OPENSSL_DIR%\bin"
   - set MSVC_REDIST_DIR="C:\Program Files (x86)\Microsoft Visual Studio "%VSVER%".0\VC\redist\%ARCH%\Microsoft.VC%VSVER%0.CRT"
-  - set ICU_BIN_DIR="%QZ_DIR%\windows\wininstall\icu\bin"
-  - IF /I "%ARCH%" == "x64" (set INSTALLER_VERSION="%QZ_VER% x64" && set ICU_BIN_DIR="%QZ_DIR%\windows\wininstall\icu\bin64") else (set INSTALLER_VERSION="%QZ_VER%")
-  - set QTWEBENGINE_DICTIONARIES_DIR="%QZ_DIR%\windows\wininstall\qtwebengine_dictionaries"
+  - set ICU_BIN_DIR="%FK_DIR%\windows\wininstall\icu\bin"
+  - IF /I "%ARCH%" == "x64" (set INSTALLER_VERSION="%FK_VER% x64" && set ICU_BIN_DIR="%FK_DIR%\windows\wininstall\icu\bin64") else (set INSTALLER_VERSION="%FK_VER%")
+  - set QTWEBENGINE_DICTIONARIES_DIR="%FK_DIR%\windows\wininstall\qtwebengine_dictionaries"
   # make installer
   - IF /I "%APPVEYOR_REPO_TAG%" == "true" (
         IF /I "%PORTABLE_BUILD%" == "true" (
-            call "C:\Program Files (x86)\NSIS\makensis.exe" /X"Unicode true" /DCUSTOM=1 /DPORTABLE=1 /DVERSION="%QZ_VER% Portable" /DARCH=%ARCH% /DMSVC_VER=%VSVER%0 /DOPENSSL_BIN_DIR=%OPENSSL_BIN_DIR% /DMSVC_REDIST_DIR=%MSVC_REDIST_DIR% /DQZ_BIN_DIR=%QZ_DIR%\bin /DICU_BIN_DIR=%ICU_BIN_DIR% /DQT_DIR=%QTDIR% /DQT_BIN_DIR=%QTDIR%\bin /DQT_PLUGINS_DIR=%QTDIR%\plugins /DQTWEBENGINE_DICTIONARIES_DIR=%QTWEBENGINE_DICTIONARIES_DIR% installer.nsi
+            call "C:\Program Files (x86)\NSIS\makensis.exe" /X"Unicode true" /DCUSTOM=1 /DPORTABLE=1 /DVERSION="%FK_VER% Portable" /DARCH=%ARCH% /DMSVC_VER=%VSVER%0 /DOPENSSL_BIN_DIR=%OPENSSL_BIN_DIR% /DMSVC_REDIST_DIR=%MSVC_REDIST_DIR% /DQZ_BIN_DIR=%FK_DIR%\bin /DICU_BIN_DIR=%ICU_BIN_DIR% /DQT_DIR=%QTDIR% /DQT_BIN_DIR=%QTDIR%\bin /DQT_PLUGINS_DIR=%QTDIR%\plugins /DQTWEBENGINE_DICTIONARIES_DIR=%QTWEBENGINE_DICTIONARIES_DIR% installer.nsi
         ) else (
-            call "C:\Program Files (x86)\NSIS\makensis.exe" /X"Unicode true" /DCUSTOM=1 /DVERSION=%INSTALLER_VERSION% /DARCH=%ARCH% /DMSVC_VER=%VSVER%0 /DOPENSSL_BIN_DIR=%OPENSSL_BIN_DIR% /DMSVC_REDIST_DIR=%MSVC_REDIST_DIR% /DQZ_BIN_DIR=%QZ_DIR%\bin /DICU_BIN_DIR=%ICU_BIN_DIR% /DQT_DIR=%QTDIR% /DQT_BIN_DIR=%QTDIR%\bin /DQT_PLUGINS_DIR=%QTDIR%\plugins /DQTWEBENGINE_DICTIONARIES_DIR=%QTWEBENGINE_DICTIONARIES_DIR% installer.nsi
+            call "C:\Program Files (x86)\NSIS\makensis.exe" /X"Unicode true" /DCUSTOM=1 /DVERSION=%INSTALLER_VERSION% /DARCH=%ARCH% /DMSVC_VER=%VSVER%0 /DOPENSSL_BIN_DIR=%OPENSSL_BIN_DIR% /DMSVC_REDIST_DIR=%MSVC_REDIST_DIR% /DQZ_BIN_DIR=%FK_DIR%\bin /DICU_BIN_DIR=%ICU_BIN_DIR% /DQT_DIR=%QTDIR% /DQT_BIN_DIR=%QTDIR%\bin /DQT_PLUGINS_DIR=%QTDIR%\plugins /DQTWEBENGINE_DICTIONARIES_DIR=%QTWEBENGINE_DICTIONARIES_DIR% installer.nsi
         )
     )
 
