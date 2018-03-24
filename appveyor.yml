@@ -126,7 +126,7 @@ after_build:
   # prepare qtwebengine_dictionaries
   - mkdir qtwebengine_dictionaries
   - cd qtwebengine_dictionaries
-  - set APPVEYOR_REPO_TAG="true"
+  - set APPVEYOR_REPO_TAG=true
   - IF /I "%APPVEYOR_REPO_TAG%" == "true" (
         7z x "%FK_DIR%\windows\dependencies\master.tar.gz" &&
         7z x "master.tar" &&
