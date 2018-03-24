@@ -52,7 +52,7 @@ build_script:
   - cd extra-cmake-modules
   - mkdir build
   - cd build
-  - cmake  -G "NMake Makefiles JOM" .. # or run : cmake -DCMAKE_INSTALL_PREFIX=/usr .. &&
+  - cmake  -DCMAKE_BUILD_TYPE=%CONFIGURATION% -G "NMake Makefiles JOM" .. # or run : cmake -DCMAKE_INSTALL_PREFIX=/usr .. &&
   - call %MAKETOOL%
   - call %MAKETOOL% install
   - cd ../..
@@ -61,7 +61,7 @@ build_script:
   # - cd ki18n
   # - mkdir build
   # - cd build
-  # - cmake  -G "NMake Makefiles JOM" ..
+  # - cmake  -DCMAKE_BUILD_TYPE=%CONFIGURATION%  -G "NMake Makefiles JOM" ..
   # - call %MAKETOOL%
   # - call %MAKETOOL% install
   # - cd ../..
@@ -78,9 +78,9 @@ build_script:
   - cd build
   - echo "Genarating NMake Makefiles JOM using CMake..."
   - IF /I "%PORTABLE_BUILD%" == "true" (
-        cmake -DPORTABLE_BUILD=%PORTABLE_BUILD% -DOPENSSL_ROOT_DIR=%OPENSSL_DIR% -G "NMake Makefiles JOM" ..
+        cmake  -DCMAKE_BUILD_TYPE=%CONFIGURATION% -DPORTABLE_BUILD=%PORTABLE_BUILD% -DOPENSSL_ROOT_DIR=%OPENSSL_DIR% -G "NMake Makefiles JOM" ..
     ) else (
-        cmake -DOPENSSL_ROOT_DIR=%OPENSSL_DIR% -G "NMake Makefiles JOM" ..
+        cmake  -DCMAKE_BUILD_TYPE=%CONFIGURATION% -DOPENSSL_ROOT_DIR=%OPENSSL_DIR% -G "NMake Makefiles JOM" ..
     )
   - echo "Build Falkon..."
   - call %MAKETOOL%
