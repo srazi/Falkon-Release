@@ -87,6 +87,7 @@ build_script:
 
 test_script:
   - cd %FK_DIR%\build
+  - del bin\qt.conf
   - ctest -V
 
 after_build:
