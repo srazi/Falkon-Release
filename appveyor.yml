@@ -153,18 +153,18 @@ after_build:
     )
 
 artifacts:
-   - path: windows\Falkon*Installer*.exe
+   - path: falkon-Falkon-3.0\windows\Falkon*Installer*.exe
      name: Falkon Installer (%ARCH%)
-   - path: bin\*.exe
+   - path: falkon-Falkon-3.0\build\bin\*.exe
      name: Falkon Executable (%ARCH%)
-   - path: bin\*.dll
+   - path: falkon-Falkon-3.0\build\bin\*.dll
      name: Falkon DLL (%ARCH%)
 
 
 deploy:
-    release: 'Version $(qz_ver)'
+    release: 'Version $(version)'
     tag: $(appveyor_repo_tag_name) # don't remove or modify tag field
-    description: 'Falkon $(qz_ver) Windows Installer Released'
+    description: 'Falkon $(fk_ver) Windows Installer Released'
     provider: GitHub
     auth_token:
       secure: BumEo5ic9KIrhc8RxwsKFd/L6WwC0s5LpSef9uH+PtUKICZBZAcyqnPewKUqzEFi  # your encrypted token from GitHub
