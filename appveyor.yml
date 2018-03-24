@@ -163,7 +163,7 @@ artifacts:
 
 deploy:
     release: 'Version $(version)'
-    tag: $(appveyor_repo_tag_name) # don't remove or modify tag field
+    tag: $(version) # don't remove or modify tag field
     description: 'Falkon $(fk_ver) Windows Installer Released'
     provider: GitHub
     auth_token:
