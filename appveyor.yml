@@ -85,9 +85,9 @@ build_script:
   - echo "Build Falkon..."
   - call %MAKETOOL%
 
-test_script:
-  - cd %FK_DIR%\build
-  - ctest
+# test_script:
+  # - cd %FK_DIR%\build
+  # - ctest
 
 after_build:
   # prepare dependencies
