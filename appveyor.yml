@@ -91,8 +91,7 @@ test_script:
 
 after_build:
   # prepare dependencies
-  - echo [Paths] > %FK_DIR%\bin\qt.conf && echo Plugins="." >> %FK_DIR%\bin\qt.conf
-  - copy  %FK_DIR%\COPYRIGHT %FK_DIR%\bin\COPYRIGHT.txt
+  - echo [Paths] > %FK_DIR%\build\bin\qt.conf && echo Plugins="." >> %FK_DIR%\build\bin\qt.conf
   - cd %FK_DIR%\windows
   - IF NOT EXIST "dependencies" ( mkdir dependencies )
   - cd dependencies
@@ -109,27 +108,27 @@ after_build:
         appveyor DownloadFile "http://chromium.googlesource.com/chromium/deps/hunspell_dictionaries/+archive/master.tar.gz" ) else (echo "Use cached master.tar.gz")
   - mkdir ..\wininstall
   - cd ..\wininstall
-  - copy ..\*.nsh .\
-  - copy ..\*.ico .\
-  - copy ..\*.bmp .\
+  - copy %FK_DIR%\windows\*.nsh .\
+  - copy %FK_DIR%\src\lib\data\icons\exeicons\falkon.ico .\install.ico
+  - copy %FK_DIR%\src\lib\data\icons\exeicons\falkon.ico .\uninstall.ico
+  - copy %FK_DIR%\windows\*.bmp .\
   # prepare nsis plugins
-  - 7z x "..\dependencies\KillProcDll&FindProcDll.zip"
-  - 7z x ..\dependencies\Registry.zip
-  - 7z x ..\dependencies\AppAssocReg-0.4.zip
-  - 7z x ..\dependencies\StdUtils.2016-05-14.r2.zip
+  - 7z x "%FK_DIR%\windows\dependencies\KillProcDll&FindProcDll.zip"
+  - 7z x %FK_DIR%\windows\dependencies\Registry.zip
+  - 7z x %FK_DIR%\windows\dependencies\AppAssocReg-0.4.zip
+  - 7z x %FK_DIR%\windows\dependencies\StdUtils.2016-05-14.r2.zip
   - copy Desktop\Plugin\*.dll .\
   - copy Plugins\Unicode\*.dll .\
   - copy Include\*.nsh %FK_DIR%\windows
   # prepare icu
-  - 7z x "..\dependencies\%ICU_DIR_NAME%.zip"
-  # prepare qtwebengine_dictionaries 
+  - 7z x "%FK_DIR%\windows\dependencies\%ICU_DIR_NAME%.zip"
+  # prepare qtwebengine_dictionaries
   - mkdir qtwebengine_dictionaries
   - cd qtwebengine_dictionaries
   - IF /I "%APPVEYOR_REPO_TAG%" == "true" (
         7z x "%FK_DIR%\windows\dependencies\master.tar.gz" &&
         7z x "master.tar" &&
         mkdir "doc" &&
-        move README* "doc\" &&
         move COPYING* "doc\"
     )
   - cd %FK_DIR%\windows
@@ -142,9 +141,9 @@ after_build:
   # make installer
   - IF /I "%APPVEYOR_REPO_TAG%" == "true" (
         IF /I "%PORTABLE_BUILD%" == "true" (
-            call "C:\Program Files (x86)\NSIS\makensis.exe" /X"Unicode true" /DCUSTOM=1 /DPORTABLE=1 /DVERSION="%FK_VER% Portable" /DARCH=%ARCH% /DMSVC_VER=%VSVER%0 /DOPENSSL_BIN_DIR=%OPENSSL_BIN_DIR% /DMSVC_REDIST_DIR=%MSVC_REDIST_DIR% /DQZ_BIN_DIR=%FK_DIR%\bin /DICU_BIN_DIR=%ICU_BIN_DIR% /DQT_DIR=%QTDIR% /DQT_BIN_DIR=%QTDIR%\bin /DQT_PLUGINS_DIR=%QTDIR%\plugins /DQTWEBENGINE_DICTIONARIES_DIR=%QTWEBENGINE_DICTIONARIES_DIR% installer.nsi
+            call "C:\Program Files (x86)\NSIS\makensis.exe" /X"Unicode true" /DCUSTOM=1 /DPORTABLE=1 /DVERSION="%FK_VER% Portable" /DARCH=%ARCH% /DMSVC_VER=%VSVER%0 /DOPENSSL_BIN_DIR=%OPENSSL_BIN_DIR% /DMSVC_REDIST_DIR=%MSVC_REDIST_DIR% /DQZ_BIN_DIR=%FK_DIR%\build\bin /DICU_BIN_DIR=%ICU_BIN_DIR% /DQT_DIR=%QTDIR% /DQT_BIN_DIR=%QTDIR%\bin /DQT_PLUGINS_DIR=%QTDIR%\plugins /DQTWEBENGINE_DICTIONARIES_DIR=%QTWEBENGINE_DICTIONARIES_DIR% installer.nsi
         ) else (
-            call "C:\Program Files (x86)\NSIS\makensis.exe" /X"Unicode true" /DCUSTOM=1 /DVERSION=%INSTALLER_VERSION% /DARCH=%ARCH% /DMSVC_VER=%VSVER%0 /DOPENSSL_BIN_DIR=%OPENSSL_BIN_DIR% /DMSVC_REDIST_DIR=%MSVC_REDIST_DIR% /DQZ_BIN_DIR=%FK_DIR%\bin /DICU_BIN_DIR=%ICU_BIN_DIR% /DQT_DIR=%QTDIR% /DQT_BIN_DIR=%QTDIR%\bin /DQT_PLUGINS_DIR=%QTDIR%\plugins /DQTWEBENGINE_DICTIONARIES_DIR=%QTWEBENGINE_DICTIONARIES_DIR% installer.nsi
+            call "C:\Program Files (x86)\NSIS\makensis.exe" /X"Unicode true" /DCUSTOM=1 /DVERSION=%INSTALLER_VERSION% /DARCH=%ARCH% /DMSVC_VER=%VSVER%0 /DOPENSSL_BIN_DIR=%OPENSSL_BIN_DIR% /DMSVC_REDIST_DIR=%MSVC_REDIST_DIR% /DQZ_BIN_DIR=%FK_DIR%\build\bin /DICU_BIN_DIR=%ICU_BIN_DIR% /DQT_DIR=%QTDIR% /DQT_BIN_DIR=%QTDIR%\bin /DQT_PLUGINS_DIR=%QTDIR%\plugins /DQTWEBENGINE_DICTIONARIES_DIR=%QTWEBENGINE_DICTIONARIES_DIR% installer.nsi
         )
     )
 
