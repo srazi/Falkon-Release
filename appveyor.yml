@@ -92,7 +92,7 @@ test_script:
 after_build:
   # prepare dependencies
   - echo [Paths] > %FK_DIR%\build\bin\qt.conf && echo Plugins="." >> %FK_DIR%\build\bin\qt.conf
-  - copy  %FK_DIR%\COPYING %FK_DIR%\bin\COPYRIGHT.txt
+  - copy %FK_DIR%\COPYING %FK_DIR%\build\bin\COPYRIGHT.txt
   - cd %FK_DIR%\windows
   - IF NOT EXIST "dependencies" ( mkdir dependencies )
   - cd dependencies
