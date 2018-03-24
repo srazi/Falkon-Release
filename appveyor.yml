@@ -115,7 +115,7 @@ after_build:
   - copy %FK_DIR%\src\lib\data\icons\exeicons\falkon.ico .\uninstall.ico
   - copy %FK_DIR%\windows\*.bmp .\
   # prepare nsis plugins
-  - 7z x "%FK_DIR%\windows\dependencies\KillProcDll&FindProcDll.zip"
+  # - 7z x "%FK_DIR%\windows\dependencies\KillProcDll&FindProcDll.zip"
   - 7z x %FK_DIR%\windows\dependencies\Registry.zip
   - 7z x %FK_DIR%\windows\dependencies\AppAssocReg-0.4.zip
   - 7z x %FK_DIR%\windows\dependencies\StdUtils.2016-05-14.r2.zip
