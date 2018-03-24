@@ -98,8 +98,8 @@ after_build:
   - IF NOT EXIST "dependencies" ( mkdir dependencies )
   - cd dependencies
   - IF NOT EXIST "%ICU_DIR_NAME%.zip" ( appveyor DownloadFile %ICU_DOWNLOAD_URL% ) else ( echo "Use cached %ICU_DIR_NAME%.zip")
-  # see: https://github.com/appveyor/ci/issues/1347
-  - ps: If (![System.IO.File]::Exists("$env:APPVEYOR_BUILD_FOLDER\falkon-Falkon-3.0\windows\dependencies\KillProcDll&FindProcDll.zip")) { (New-Object Net.WebClient).DownloadFile("http://nsis.sourceforge.net/mediawiki/images/5/53/KillProcDll%26FindProcDll.zip", "$env:APPVEYOR_BUILD_FOLDER\falkon-Falkon-3.0\windows\dependencies\KillProcDll&FindProcDll.zip") } ELse { echo "Use cached KillProcDll&FindProcDll.zip" }
+  # # see: https://github.com/appveyor/ci/issues/1347
+  # - ps: If (![System.IO.File]::Exists("$env:APPVEYOR_BUILD_FOLDER\falkon-Falkon-3.0\windows\dependencies\KillProcDll&FindProcDll.zip")) { (New-Object Net.WebClient).DownloadFile("http://nsis.sourceforge.net/mediawiki/images/5/53/KillProcDll%26FindProcDll.zip", "$env:APPVEYOR_BUILD_FOLDER\falkon-Falkon-3.0\windows\dependencies\KillProcDll&FindProcDll.zip") } ELse { echo "Use cached KillProcDll&FindProcDll.zip" }
   - IF NOT EXIST "Registry.zip" (
         appveyor DownloadFile "http://nsis.sourceforge.net/mediawiki/images/4/47/Registry.zip" ) else (echo "Use cached Registry.zip")
   - IF NOT EXIST "AppAssocReg-0.4.zip" (
@@ -119,6 +119,7 @@ after_build:
   - 7z x %FK_DIR%\windows\dependencies\Registry.zip
   - 7z x %FK_DIR%\windows\dependencies\AppAssocReg-0.4.zip
   - 7z x %FK_DIR%\windows\dependencies\StdUtils.2016-05-14.r2.zip
+  - copy %APPVEYOR_BUILD_FOLDER%\nsis\KillProcDll-and-FindProcDll\*.dll .\
   - copy Desktop\Plugin\*.dll .\
   - copy Plugins\Unicode\*.dll .\
   - copy Include\*.nsh %FK_DIR%\windows
