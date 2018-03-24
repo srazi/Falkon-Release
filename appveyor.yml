@@ -31,10 +31,10 @@ environment:
 
   matrix:
     - QTDIR: C:\Qt\5.10.1\msvc2015
-    - ARCH: x64
-      QTDIR: C:\Qt\5.10.1\msvc2015_64
-    - PORTABLE_BUILD: "true"
-      QTDIR: C:\Qt\5.10.1\msvc2015
+    # - ARCH: x64
+      # QTDIR: C:\Qt\5.10.1\msvc2015_64
+    # - PORTABLE_BUILD: "true"
+      # QTDIR: C:\Qt\5.10.1\msvc2015
 
 install:
   - set CPU=32
