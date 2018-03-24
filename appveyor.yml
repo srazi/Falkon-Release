@@ -1,4 +1,5 @@
 version: 3.{build}-{branch}
+skip_tags: true
 
 cache:
   - windows/dependencies
