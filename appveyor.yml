@@ -67,7 +67,8 @@ build_script:
   # - call %MAKETOOL% install
   # - cd ../..
   - echo "Downloading source of Falkon..."
-  - appveyor DownloadFile "https://github.com/KDE/falkon/archive/Falkon/3.0.zip"
+  #- appveyor DownloadFile "https://github.com/KDE/falkon/archive/Falkon/3.0.zip"
+  - appveyor DownloadFile "https://github.com/srazi/falkon/archive/Falkon/3.0.zip"
   #- 7z x "master.zip"
   - 7z x "3.0.zip"
   - cd falkon-Falkon-3.0
@@ -184,10 +185,10 @@ deploy:
     # on_build_failure: false
     # on_build_status_changed: true
 
-# # remote desktop connection on init
-# init:
-  # - ps: iex ((new-object net.webclient).DownloadString('https://raw.githubusercontent.com/appveyor/ci/master/scripts/enable-rdp.ps1'))
+# remote desktop connection on init
+init:
+  - ps: iex ((new-object net.webclient).DownloadString('https://raw.githubusercontent.com/appveyor/ci/master/scripts/enable-rdp.ps1'))
 
-# # remote desktop connection on finish and block build to not destroy VM
-# on_finish:
-  # - ps: $blockRdp = $true; iex ((new-object net.webclient).DownloadString('https://raw.githubusercontent.com/appveyor/ci/master/scripts/enable-rdp.ps1'))
+# remote desktop connection on finish and block build to not destroy VM
+on_finish:
+  - ps: $blockRdp = $true; iex ((new-object net.webclient).DownloadString('https://raw.githubusercontent.com/appveyor/ci/master/scripts/enable-rdp.ps1'))
