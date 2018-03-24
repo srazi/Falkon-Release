@@ -132,6 +132,7 @@ after_build:
         7z x "%FK_DIR%\windows\dependencies\master.tar.gz" &&
         7z x "master.tar" &&
         mkdir "doc" &&
+        move README* "doc\" &&
         move COPYING* "doc\"
     )
   - cd %FK_DIR%\windows
