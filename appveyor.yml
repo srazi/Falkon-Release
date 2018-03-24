@@ -31,10 +31,10 @@ environment:
 
   matrix:
     - QTDIR: C:\Qt\5.10.1\msvc2015
-    # - ARCH: x64
-      # QTDIR: C:\Qt\5.10.1\msvc2015_64
-    # - PORTABLE_BUILD: "true"
-      # QTDIR: C:\Qt\5.10.1\msvc2015
+    - ARCH: x64
+      QTDIR: C:\Qt\5.10.1\msvc2015_64
+    - PORTABLE_BUILD: "true"
+      QTDIR: C:\Qt\5.10.1\msvc2015
 
 install:
   - set CPU=32
@@ -183,10 +183,10 @@ deploy:
     # on_build_failure: false
     # on_build_status_changed: true
 
-# remote desktop connection on init
-init:
-  - ps: iex ((new-object net.webclient).DownloadString('https://raw.githubusercontent.com/appveyor/ci/master/scripts/enable-rdp.ps1'))
+# # remote desktop connection on init
+# init:
+  # - ps: iex ((new-object net.webclient).DownloadString('https://raw.githubusercontent.com/appveyor/ci/master/scripts/enable-rdp.ps1'))
 
-# remote desktop connection on finish and block build to not destroy VM
-on_finish:
-  - ps: $blockRdp = $true; iex ((new-object net.webclient).DownloadString('https://raw.githubusercontent.com/appveyor/ci/master/scripts/enable-rdp.ps1'))
+# # remote desktop connection on finish and block build to not destroy VM
+# on_finish:
+  # - ps: $blockRdp = $true; iex ((new-object net.webclient).DownloadString('https://raw.githubusercontent.com/appveyor/ci/master/scripts/enable-rdp.ps1'))
