@@ -86,8 +86,8 @@ build_script:
   - call %MAKETOOL%
 
 test_script:
-  - cd %FK_DIR%\build\bin
-  - call autotests.exe
+  - cd %FK_DIR%\build
+  - ctest
 
 after_build:
   # prepare dependencies
@@ -140,13 +140,13 @@ after_build:
   - IF /I "%ARCH%" == "x64" (set INSTALLER_VERSION="%FK_VER% x64" && set ICU_BIN_DIR="%FK_DIR%\windows\wininstall\icu\bin64") else (set INSTALLER_VERSION="%FK_VER%")
   - set QTWEBENGINE_DICTIONARIES_DIR="%FK_DIR%\windows\wininstall\qtwebengine_dictionaries"
   # make installer
-  - IF /I "%APPVEYOR_REPO_TAG%" == "true" (
+  #- IF /I "%APPVEYOR_REPO_TAG%" == "true" (
         IF /I "%PORTABLE_BUILD%" == "true" (
             call "C:\Program Files (x86)\NSIS\makensis.exe" /X"Unicode true" /DCUSTOM=1 /DPORTABLE=1 /DVERSION="%FK_VER% Portable" /DARCH=%ARCH% /DMSVC_VER=%VSVER%0 /DOPENSSL_BIN_DIR=%OPENSSL_BIN_DIR% /DMSVC_REDIST_DIR=%MSVC_REDIST_DIR% /DFALKON_SRC_DIR=%FK_DIR% /DFALKON_BIN_DIR=%FK_DIR%\build\bin /DICU_BIN_DIR=%ICU_BIN_DIR% /DQT_DIR=%QTDIR% /DQT_BIN_DIR=%QTDIR%\bin /DQT_PLUGINS_DIR=%QTDIR%\plugins /DQTWEBENGINE_DICTIONARIES_DIR=%QTWEBENGINE_DICTIONARIES_DIR% installer.nsi
         ) else (
             call "C:\Program Files (x86)\NSIS\makensis.exe" /X"Unicode true" /DCUSTOM=1 /DVERSION=%INSTALLER_VERSION% /DARCH=%ARCH% /DMSVC_VER=%VSVER%0 /DOPENSSL_BIN_DIR=%OPENSSL_BIN_DIR% /DMSVC_REDIST_DIR=%MSVC_REDIST_DIR% /DFALKON_SRC_DIR=%FK_DIR% /DFALKON_BIN_DIR=%FK_DIR%\build\bin /DICU_BIN_DIR=%ICU_BIN_DIR% /DQT_DIR=%QTDIR% /DQT_BIN_DIR=%QTDIR%\bin /DQT_PLUGINS_DIR=%QTDIR%\plugins /DQTWEBENGINE_DICTIONARIES_DIR=%QTWEBENGINE_DICTIONARIES_DIR% installer.nsi
         )
-    )
+  #  )
 
 artifacts:
    - path: windows\Falkon*Installer*.exe
