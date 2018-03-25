@@ -1,4 +1,22 @@
-version: 3.{build}
+image:
+    - Visual Studio 2015
+
+environment:
+  global:
+    FK_VER: 3.0.0
+    VSVER: 14
+    ARCH: x86
+    QMAKESPEC: win32-msvc
+    MAKETOOL: nmake
+    TOOLSDIR: C:\Qt\Tools\QtCreator
+
+  matrix:
+    - QTDIR: C:\Qt\5.10.1\msvc2015
+    - ARCH: x64
+      QTDIR: C:\Qt\5.10.1\msvc2015_64
+
+version: $(fk_ver)-{build}
+
 skip_tags: true
 
 cache:
@@ -17,23 +35,6 @@ branches:
     - v1.4
     - v1.6
     - v1.8
-
-image:
-    - Visual Studio 2015
-
-environment:
-  global:
-    FK_VER: 3.0.0
-    VSVER: 14
-    ARCH: x86
-    QMAKESPEC: win32-msvc
-    MAKETOOL: nmake
-    TOOLSDIR: C:\Qt\Tools\QtCreator
-
-  matrix:
-    - QTDIR: C:\Qt\5.10.1\msvc2015
-    - ARCH: x64
-      QTDIR: C:\Qt\5.10.1\msvc2015_64
 
 install:
   - set CPU=32
