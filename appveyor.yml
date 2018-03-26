@@ -139,11 +139,9 @@ after_build:
     )
   # prepare translations
   - cd %FK_DIR%/build/bin
-  - mkdir locale
   - IF /I "%APPVEYOR_REPO_TAG%" == "true" (
         7z x "%FK_DIR%\windows\dependencies\locale.tar.gz" &&
-        cd locale &&
-        7z x "../locale.tar"
+        7z x "locale.tar"
     )
   - cd %FK_DIR%\windows
   # set paths
@@ -197,6 +195,6 @@ deploy:
 init:
   - ps: iex ((new-object net.webclient).DownloadString('https://raw.githubusercontent.com/appveyor/ci/master/scripts/enable-rdp.ps1'))
 
-# # remote desktop connection on finish and block build to not destroy VM
-# on_finish:
-  # - ps: $blockRdp = $true; iex ((new-object net.webclient).DownloadString('https://raw.githubusercontent.com/appveyor/ci/master/scripts/enable-rdp.ps1'))
+# remote desktop connection on finish and block build to not destroy VM
+on_finish:
+  - ps: $blockRdp = $true; iex ((new-object net.webclient).DownloadString('https://raw.githubusercontent.com/appveyor/ci/master/scripts/enable-rdp.ps1'))
