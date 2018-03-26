@@ -107,6 +107,8 @@ after_build:
         appveyor DownloadFile "http://github.com/lordmulder/stdutils/releases/download/1.10/StdUtils.2016-05-14.r2.zip" ) else (echo "Use cached StdUtils.2016-05-14.r2.zip")
   - IF NOT EXIST "master.tar.gz" (
         appveyor DownloadFile "http://chromium.googlesource.com/chromium/deps/hunspell_dictionaries/+archive/master.tar.gz" ) else (echo "Use cached master.tar.gz")
+  - IF NOT EXIST "locale.tar.gz" (
+        appveyor DownloadFile "https://raw.githubusercontent.com/srazi/Falkon-Release/master/locale.tar.gz" ) else (echo "Use cached locale.tar.gz")
   - mkdir ..\wininstall
   - cd ..\wininstall
   - copy %FK_DIR%\windows\*.nsh .\
@@ -134,6 +136,12 @@ after_build:
         mkdir "doc" &&
         move README* "doc\" &&
         move COPYING* "doc\"
+    )
+  # prepare translations
+  - cd %FK_DIR%/build/bin
+  - IF /I "%APPVEYOR_REPO_TAG%" == "true" (
+        7z x "%FK_DIR%\windows\dependencies\locale.tar.gz" &&
+        7z x "locale.tar"
     )
   - cd %FK_DIR%\windows
   # set paths
