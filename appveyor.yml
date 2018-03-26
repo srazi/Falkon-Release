@@ -139,9 +139,11 @@ after_build:
     )
   # prepare translations
   - cd %FK_DIR%/build/bin
+  - mkdir locale
   - IF /I "%APPVEYOR_REPO_TAG%" == "true" (
         7z x "%FK_DIR%\windows\dependencies\locale.tar.gz" &&
-        7z x "locale.tar"
+        cd locale &&
+        7z x "../locale.tar"
     )
   - cd %FK_DIR%\windows
   # set paths
