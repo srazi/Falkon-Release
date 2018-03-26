@@ -66,8 +66,7 @@ build_script:
   # - call %MAKETOOL% install
   # - cd ../..
   - echo "Downloading source of Falkon..."
-  #- appveyor DownloadFile "https://github.com/KDE/falkon/archive/Falkon/3.0.zip"
-  - appveyor DownloadFile "https://github.com/srazi/falkon/archive/Falkon/3.0.zip"
+  - appveyor DownloadFile "https://github.com/KDE/falkon/archive/Falkon/3.0.zip"
   #- 7z x "master.zip"
   - 7z x "3.0.zip"
   - cd falkon-Falkon-3.0
