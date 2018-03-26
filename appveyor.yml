@@ -138,7 +138,7 @@ after_build:
         move COPYING* "doc\"
     )
   # prepare translations
-  - cd %FK_DIR%/build/bin
+  - cd %FK_DIR%\build\bin
   - IF /I "%APPVEYOR_REPO_TAG%" == "true" (
         7z x "%FK_DIR%\windows\dependencies\locale.tar.gz" &&
         7z x "locale.tar"
