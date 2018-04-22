@@ -37,7 +37,7 @@ branches:
     - v1.8
 
 install:
-  - set CPU=32
+  - set  CPU=32
   - IF /I "%ARCH%" == "x64" (set CPU=64)
   - set OPENSSL_DIR="C:\OpenSSL-Win%CPU%"
   - set ICU_DIR_NAME=icu4c-54_1-Win%CPU%-msvc10
