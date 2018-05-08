@@ -3,7 +3,7 @@ image:
 
 environment:
   global:
-    FK_VER: 3.0.0
+    FK_VER: 3.0.1
     VSVER: 14
     ARCH: x86
     QMAKESPEC: win32-msvc
