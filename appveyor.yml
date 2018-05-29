@@ -1,19 +1,20 @@
+#Made changes for using VS2017 and QT5.11 with webengine 5.11.0
 image:
-    - Visual Studio 2015
+    - Visual Studio 2017
 
 environment:
   global:
-    FK_VER: 3.0.1
-    VSVER: 14
+    FK_VER: 3.0.1z
+    VSVER: 15
     ARCH: x86
     QMAKESPEC: win32-msvc
     MAKETOOL: nmake
     TOOLSDIR: C:\Qt\Tools\QtCreator
 
   matrix:
-    - QTDIR: C:\Qt\5.10.1\msvc2015
+    - QTDIR: C:\Qt\5.11.0\msvc2017
     - ARCH: x64
-      QTDIR: C:\Qt\5.10.1\msvc2015_64
+      QTDIR: C:\Qt\5.11.0\msvc2017_64
 
 version: $(fk_ver)-{build}
 
@@ -42,7 +43,7 @@ install:
   - set OPENSSL_DIR="C:\OpenSSL-Win%CPU%"
   - set ICU_DIR_NAME=icu4c-54_1-Win%CPU%-msvc10
   - set ICU_DOWNLOAD_URL="http://download.icu-project.org/files/icu4c/54.1/%ICU_DIR_NAME%.zip"
-  - call "C:\Program Files (x86)\Microsoft Visual Studio "%VSVER%".0\VC\vcvarsall.bat" %ARCH%
+  - call "C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Auxiliary\Build\vcvarsall.bat" %ARCH%
   - set PATH=%QTDIR%\bin;%TOOLSDIR%\bin;%OPENSSL_DIR%\bin;%CD%\bin;%PATH%
   - echo "Falkon BUILD %APPVEYOR_BUILD_VERSION%_%QMAKESPEC%_%CONFIGURATION%_%ARCH%"
 
@@ -146,7 +147,9 @@ after_build:
   - cd %FK_DIR%\windows
   # set paths
   - set OPENSSL_BIN_DIR="%OPENSSL_DIR%\bin"
-  - set MSVC_REDIST_DIR="C:\Program Files (x86)\Microsoft Visual Studio "%VSVER%".0\VC\redist\%ARCH%\Microsoft.VC%VSVER%0.CRT"
+  # My edit for VS 2017 redistributables...
+  # set MSVC_REDIST_DIR="C:\Program Files (x86)\Microsoft Visual Studio "%VSVER%".0\VC\redist\%ARCH%\Microsoft.VC%VSVER%0.CRT"
+  - set MSVC_REDIST_DIR="C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Redist\MSVC\14.10.25008\%ARCH%\Microsoft.VC150.CRT"
   - set ICU_BIN_DIR="%FK_DIR%\windows\wininstall\icu\bin"
   - IF /I "%ARCH%" == "x64" (set INSTALLER_VERSION="%FK_VER% x64" && set ICU_BIN_DIR="%FK_DIR%\windows\wininstall\icu\bin64") else (set INSTALLER_VERSION="%FK_VER%")
   - set QTWEBENGINE_DICTIONARIES_DIR="%FK_DIR%\windows\wininstall\qtwebengine_dictionaries"
@@ -175,7 +178,7 @@ deploy:
     description: 'Falkon $(fk_ver) Windows Installer Released'
     provider: GitHub
     auth_token:
-      secure: BumEo5ic9KIrhc8RxwsKFd/L6WwC0s5LpSef9uH+PtUKICZBZAcyqnPewKUqzEFi  # your encrypted token from GitHub
+      secure: a60e1a8f968cbe7df337e32d1690d2b14ab07b09  # your encrypted token from GitHub
     artifact: /Falkon.*Installer.*\.exe/         # Falkon Installer
     draft: false
     prerelease: false
