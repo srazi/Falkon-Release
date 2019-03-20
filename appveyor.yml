@@ -3,7 +3,7 @@ image:
 
 environment:
   global:
-    FK_VER: 3.0.1
+    FK_VER: 3.1.0
     VSVER: 14
     ARCH: x86
     QMAKESPEC: win32-msvc
@@ -11,9 +11,9 @@ environment:
     TOOLSDIR: C:\Qt\Tools\QtCreator
 
   matrix:
-    - QTDIR: C:\Qt\5.10.1\msvc2015
+    - QTDIR: C:\Qt\5.12.2\msvc2015
     - ARCH: x64
-      QTDIR: C:\Qt\5.10.1\msvc2015_64
+      QTDIR: C:\Qt\5.12.2\msvc2015_64
 
 version: $(fk_ver)-{build}
 
@@ -66,10 +66,10 @@ build_script:
   # - call %MAKETOOL% install
   # - cd ../..
   - echo "Downloading source of Falkon..."
-  - appveyor DownloadFile "https://github.com/KDE/falkon/archive/Falkon/3.0.zip"
+  - appveyor DownloadFile "https://github.com/KDE/falkon/archive/Falkon/3.1.zip"
   #- 7z x "master.zip"
-  - 7z x "3.0.zip"
-  - cd falkon-Falkon-3.0
+  - 7z x "3.1.zip"
+  - cd falkon-Falkon-3.1
   #- cd falkon-master
   - dir
   - set FK_DIR=%CD%
