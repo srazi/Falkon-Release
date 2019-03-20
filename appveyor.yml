@@ -146,7 +146,7 @@ after_build:
   - cd %FK_DIR%\windows
   # set paths
   - set OPENSSL_BIN_DIR="%OPENSSL_DIR%\bin"
-  - set MSVC_REDIST_DIR="C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Redist\MSVC\14.10.25008\%ARCH%\Microsoft.VC150.CRT"
+  - set MSVC_REDIST_DIR="C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Redist\MSVC\14.16.27012\%ARCH%\Microsoft.VC141.CRT"
   - set ICU_BIN_DIR="%FK_DIR%\windows\wininstall\icu\bin"
   - IF /I "%ARCH%" == "x64" (set INSTALLER_VERSION="%FK_VER% x64" && set ICU_BIN_DIR="%FK_DIR%\windows\wininstall\icu\bin64") else (set INSTALLER_VERSION="%FK_VER%")
   - set QTWEBENGINE_DICTIONARIES_DIR="%FK_DIR%\windows\wininstall\qtwebengine_dictionaries"
