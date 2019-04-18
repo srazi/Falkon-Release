@@ -11,16 +11,16 @@ environment:
     TOOLSDIR: C:\Qt\Tools\QtCreator
 
   matrix:
-    - QTDIR: C:\Qt\5.12.1\msvc2017
+    - QTDIR: C:\Qt\latest\msvc2017
     - ARCH: x64
-      QTDIR: C:\Qt\5.12.1\msvc2017_64
+      QTDIR: C:\Qt\latest\msvc2017_64
 
 version: $(fk_ver)-{build}
 
 skip_tags: true
 
 cache:
-  - windows/dependencies
+  - falkon/windows/dependencies
 
 build:
   parallel: true
@@ -66,11 +66,11 @@ build_script:
   # - call %MAKETOOL% install
   # - cd ../..
   - echo "Downloading source of Falkon..."
-  - appveyor DownloadFile "https://github.com/KDE/falkon/archive/Falkon/3.1.zip"
-  #- 7z x "master.zip"
-  - 7z x "3.1.zip"
-  - cd falkon-Falkon-3.1
-  #- cd falkon-master
+  # - appveyor DownloadFile "https://github.com/KDE/falkon/archive/Falkon/3.1.zip"
+  # - 7z x "3.1.zip"
+  # - cd falkon-Falkon-3.1
+  - git clone --branch=Falkon/3.1 https://github.com/KDE/falkon.git
+  - cd falkon
   - dir
   - set FK_DIR=%CD%
   - mkdir build
@@ -161,13 +161,12 @@ after_build:
     )
 
 artifacts:
-   - path: falkon-Falkon-*\windows\Falkon*Installer*.exe
+   - path: falkon\windows\Falkon*Installer*.exe
      name: Falkon Installer (%ARCH%)
-   - path: falkon-Falkon-*\build\bin\*.exe
+   - path: falkon\build\bin\*.exe
      name: Falkon Executable (%ARCH%)
-   - path: falkon-Falkon-*\build\bin\*.dll
+   - path: falkon\build\bin\*.dll
      name: Falkon DLL (%ARCH%)
-
 
 deploy:
     release: 'Version $(appveyor_build_version)'
